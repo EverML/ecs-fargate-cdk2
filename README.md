@@ -1,14 +1,15 @@
-# Welcome to your CDK TypeScript project!
+# ECS+Fargate CDK 2 Base template
 
-This is a blank project for TypeScript development with CDK.
+Welcome!! this is a template to deploy containers a bunch of different ways
+ #### how to deploy the application
 
-The `cdk.json` file tells the CDK Toolkit how to execute your app.
 
-## Useful commands
+ * bootstrap the environment
+ ```shell
+./bootstrap.sh
+ ```
 
- * `npm run build`   compile typescript to js
- * `npm run watch`   watch for changes and compile
- * `npm run test`    perform the jest unit tests
- * `cdk deploy`      deploy this stack to your default AWS account/region
- * `cdk diff`        compare deployed stack with current state
- * `cdk synth`       emits the synthesized CloudFormation template
+* deploy the stack
+```shell
+npx cdk deploy
+```
