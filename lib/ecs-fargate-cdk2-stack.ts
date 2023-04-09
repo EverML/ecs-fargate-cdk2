@@ -1,19 +1,20 @@
 import { Stack, StackProps } from 'aws-cdk-lib';
-import { Construct } from 'constructs';
 import * as ec2 from "aws-cdk-lib/aws-ec2";
 import * as ecs from "aws-cdk-lib/aws-ecs";
 import * as ecs_patterns from "aws-cdk-lib/aws-ecs-patterns";
+import { Construct } from 'constructs';
 
 export class EcsFargateCdk2Stack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
     const vpc = new ec2.Vpc(this, "MyVpc", {
-      maxAzs: 3 // Default is all AZs in region
+      maxAzs: 2 // Default is all AZs in region
     });
 
     const cluster = new ecs.Cluster(this, "MyCluster", {
-      vpc: vpc
+      vpc: vpc,
+      clusterName: ''
     });
 
     // Create a load-balanced Fargate service and make it public
