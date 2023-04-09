@@ -23,8 +23,8 @@ export class EcsClusterStack extends Stack {
     });
 
     const webRepository = ecr.Repository.fromRepositoryName(this,`importedWebRepository${props.stage}`,'web')
-    const catsRepository = ecr.Repository.fromRepositoryName(this,`importedCatRepository${props.stage}`,'cats')
-    const dogsRepository = ecr.Repository.fromRepositoryName(this,`importedDogRepository${props.stage}`,'dogs')
+    // const catsRepository = ecr.Repository.fromRepositoryName(this,`importedCatRepository${props.stage}`,'cats')
+    // const dogsRepository = ecr.Repository.fromRepositoryName(this,`importedDogRepository${props.stage}`,'dogs')
     
     // Create a load-balanced Fargate service and make it public
     const service = this.createNewService('web',cluster, webRepository);

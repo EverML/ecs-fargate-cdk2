@@ -17,8 +17,8 @@ export class VPCStack extends Stack {
     super(scope, id, props);
 
     this.vpc = new ec2.Vpc(this, `VPC${props.stage}`, {
-      vpcName: `vpc-${props.stage}`, 
-      ipAddresses: ec2.IpAddresses.cidr('10.0.0.0/16'),
+      vpcName: `VPC${props.stage}`, 
+      ipAddresses: ec2.IpAddresses.cidr(props.cidr),
       maxAzs: 2,
       subnetConfiguration:[
         {
@@ -31,7 +31,8 @@ export class VPCStack extends Stack {
           name: `private-subnet-${props.stage}`,
           subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
         },
-      ]
+      ],
+      natGateways: 1
     });
 
    
