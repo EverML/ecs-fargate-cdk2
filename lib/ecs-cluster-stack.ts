@@ -5,6 +5,7 @@ import * as ecs from "aws-cdk-lib/aws-ecs";
 import * as ecs_patterns from "aws-cdk-lib/aws-ecs-patterns";
 import { Construct } from 'constructs';
 import { STAGE } from '../bin/ecs-fargate';
+import path = require('path');
 
 export interface EcsClusterProps extends StackProps {
   stage: STAGE;
@@ -23,19 +24,24 @@ export class EcsClusterStack extends Stack {
     });
 
     const webRepository = ecr.Repository.fromRepositoryName(this,`importedWebRepository${props.stage}`,'web')
-    // const catsRepository = ecr.Repository.fromRepositoryName(this,`importedCatRepository${props.stage}`,'cats')
-    // const dogsRepository = ecr.Repository.fromRepositoryName(this,`importedDogRepository${props.stage}`,'dogs')
+    const catsRepository = ecr.Repository.fromRepositoryName(this,`importedCatRepository${props.stage}`,'cats')
+    const dogsRepository = ecr.Repository.fromRepositoryName(this,`importedDogRepository${props.stage}`,'dogs')
     
     // Create a load-balanced Fargate service and make it public
-    const service = this.createNewService('web',cluster, webRepository);
+    const fargateService = this.createNewService('web',cluster, webRepository);
 
-    //this.createNewService('cat',cluster, catsRepository);
-    //this.createNewService('dog',cluster, dogsRepository);
+    fargateService.service.taskDefinition.addContainer('catsContainer', {
+      image: ecs.AssetImage.fromEcrRepository(catsRepository)
+    })
+  
+    fargateService.service.taskDefinition.addContainer('dogsContainer', {
+      image: ecs.AssetImage.fromEcrRepository(dogsRepository)
+    })
   } 
 
   
   private createNewService(name:string,cluster: ecs.Cluster, repository: ecr.IRepository) {
-    return new ecs_patterns.ApplicationLoadBalancedFargateService(this, `${name}-service`, {
+    return new ecs_patterns.ApplicationMultipleTargetGroupsFargateService(this, `${name}-service`, {
       serviceName:`service-${name}`,
       loadBalancerName: `alb-${name}`,
       cluster: cluster,
