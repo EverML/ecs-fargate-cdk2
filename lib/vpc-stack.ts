@@ -32,7 +32,7 @@ export class VPCStack extends Stack {
           subnetType: ec2.SubnetType.PRIVATE_WITH_EGRESS,
         },
       ],
-      natGateways: 1
+      natGateways: 1,
     });
 
    

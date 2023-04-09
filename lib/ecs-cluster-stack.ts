@@ -18,7 +18,7 @@ export class EcsClusterStack extends Stack {
 
     const cluster = new ecs.Cluster(this, "MyCluster", {
       vpc: props.vpc,
-      clusterName: `ecs-cluster-${props.stage}`
+      clusterName: `EcsCluster${props.stage}`
 
     });
 
