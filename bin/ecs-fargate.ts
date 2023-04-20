@@ -17,10 +17,10 @@ const vpcDEV = new VPCStack(app,`VPCSTACKDEV`,{
   env: { account: '361941603254', region: 'us-east-1' },
   stage: STAGE.DEV,
   cidr: '10.0.0.0/16'
-})
+});
 
 new EcsClusterStack(app, `EcsClusterStackDEV`, {
   env: { account: '361941603254', region: 'us-east-1' },
   stage: STAGE.DEV,
   vpc: vpcDEV.vpc
-});                 
+});
